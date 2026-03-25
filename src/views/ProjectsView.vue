@@ -102,7 +102,7 @@ export default {
 }
 
 .page-title {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-weight: 800;
   font-size: 2rem;
   color: #2C2C2A;

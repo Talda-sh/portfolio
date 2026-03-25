@@ -8,8 +8,10 @@
         <h1 class="hero-name">Talda<span class="dot-accent">.</span></h1>
         <p class="hero-role">Développeur Web</p>
         <p class="hero-desc">
-          Étudiant en développement web à Orléans, passionné par le backend,
-          les APIs REST et les technologies modernes.
+         Je suis Talda NZOUSSI, étudiante en Bachelor Informatique à Orléans,
+  passionnée par le développement web, l'administration système et les
+  réseaux informatiques. Rigoureuse, curieuse et organisée, j'aime relever
+  des défis techniques et apprendre de nouvelles technologies.
         </p>
         <div class="hero-tags">
           <span class="tag t-purple">Python / FastAPI</span>
@@ -65,7 +67,52 @@
       </div>
 
     </section>
+<section class="about">
 
+  <h2 class="about-title">À propos de moi</h2>
+
+  <!-- Grille de 2 cartes -->
+  <div class="about-cards">
+
+    <!-- Carte 1 : Passion tech -->
+    <div class="about-card">
+      <img src="@/assets/tech.jpg" alt="Passion technologie" class="about-card-img" />
+      <div class="about-card-body">
+        <p class="about-desc">
+          Passionnée par les nouvelles technologies, je consacre mon temps libre
+          à explorer de nouveaux outils et frameworks pour enrichir mes compétences.
+          Chaque projet est pour moi une opportunité d'apprendre et de progresser.
+        </p>
+      </div>
+    </div>
+
+    <!-- Carte 2 : Job étudiant -->
+    <div class="about-card">
+      <img src="@/assets/drive.jpg" alt="Auchan Drive" class="about-card-img" />
+      <div class="about-card-body">
+        <p class="about-desc">
+          En parallèle de mes études, je travaille comme préparatrice de commandes
+          chez Auchan Drive, une expérience qui renforce mon sens de l'organisation,
+          ma rigueur et mon esprit d'équipe au quotidien.
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Langues -->
+  <div class="about-langs">
+    <div class="lang-item">
+      <span class="lang-name">Français</span>
+      <span class="lang-level t-teal">Natif</span>
+    </div>
+    <div class="lang-item">
+      <span class="lang-name">Anglais</span>
+      <span class="lang-level t-purple">Courant</span>
+    </div>
+  </div>
+
+</section>
   </div>
 </template>
 
@@ -103,8 +150,8 @@ export default {
 
 /* Nom en grand avec police Syne */
 .hero-name {
-  font-family: 'Syne', sans-serif;
-  font-weight: 800;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
   font-size: 3.5rem;
   line-height: 1;
   color: #2C2C2A;
@@ -295,4 +342,90 @@ export default {
     order: unset;
   }
 }
+/* ===== À PROPOS ===== */
+.about {
+  margin-top: 4rem;
+  padding-top: 3rem;
+  border-top: 0.5px solid #D3D1C7;
+}
+
+.about-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: #2C2C2A;
+  margin-bottom: 1.8rem;
+}
+
+/* Grille 2 cartes */
+.about-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 2rem;
+}
+
+/* Carte */
+.about-card {
+  background: #fff;
+  border: 0.5px solid #D3D1C7;
+  border-radius: 14px;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+
+.about-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Image de la carte */
+.about-card-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+/* Texte de la carte */
+.about-card-body {
+  padding: 1.2rem;
+}
+
+.about-desc {
+  font-size: 13px;
+  color: #5F5E5A;
+  line-height: 1.75;
+}
+
+/* Langues */
+.about-langs {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.lang-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lang-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #2C2C2A;
+}
+
+.lang-level {
+  padding: 3px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .about-cards {
+    grid-template-columns: 1fr;
+  }
+}  
 </style>
