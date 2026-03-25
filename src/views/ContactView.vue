@@ -20,6 +20,20 @@
             <div class="cc-val">nzoussitaldaruth@gmail.com</div>
           </div>
         </a>
+          <!-- Carte LinkedIn -->
+     
+       <a href="https://www.linkedin.com/in/talda-nzoussi-800b2838b/" target="_blank" class="contact-card">
+    <div class="cc-icon" style="background:#E6F1FB; color:#0077B5">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+    </svg>
+  </div>
+  
+  <div>
+    <div class="cc-label">LinkedIn</div>
+    <div class="cc-val">linkedin.com/in/talda-nzoussi</div>
+  </div>
+     </a>
 
         <!-- Carte GitHub -->
         <a href="https://github.com/Talda-sh" target="_blank" class="contact-card">
@@ -29,6 +43,7 @@
             <div class="cc-val">github.com/Talda-sh</div>
           </div>
         </a>
+      
 
         <!-- Carte localisation -->
         <div class="contact-card">
@@ -79,11 +94,12 @@
           ></textarea>
         </div>
 
-        <!-- Le bouton change de texte selon si le message est envoyé -->
-        <button type="submit" class="submit-btn" :disabled="sent">
-          {{ sent ? 'Message   envoyé ✓' : 'Envoyer' }}
-        </button>
-
+       <button type="submit" class="submit-btn" :disabled="loading || sent">
+  {{ sent ? 'Message envoyé ✓' : loading ? 'Envoi en cours...' : 'Envoyer' }}
+  <p v-if="error" class="error-msg">
+  Une erreur est survenue. Réessaie plus tard.
+</p>
+</button>
       </form>
 
     </div>
@@ -91,13 +107,16 @@
 </template>
 
 <script>
+import emailjs from '@emailjs/browser'
+
 export default {
   name: 'ContactView',
 
   data() {
     return {
-      sent: false, // devient true après envoi
-      // Objet lié au formulaire via v-model
+      sent: false,
+      error: false,
+      loading: false,
       form: {
         name: '',
         email: '',
@@ -108,16 +127,29 @@ export default {
 
   methods: {
     handleSubmit() {
-      // Pour l'instant on simule l'envoi
-      // Plus tard tu pourras brancher EmailJS ou ton API FastAPI ici
-      console.log('Formulaire envoyé :', this.form)
-      this.sent = true
+      this.loading = true
+      this.error = false
 
-      // Réinitialise le formulaire après 3 secondes
-      setTimeout(() => {
-        this.sent = false
+      emailjs.send(
+        'service_fwu48uf',
+        'template_4tic9wg',
+        {
+          from_name: this.form.name,
+          from_email: this.form.email,
+          message: this.form.message,
+        },
+        'DnHx9B18vfbXpGefW'
+      )
+      .then(() => {
+        this.sent = true
+        this.loading = false
         this.form = { name: '', email: '', message: '' }
-      }, 3000)
+        setTimeout(() => { this.sent = false }, 4000)
+      })
+      .catch(() => {
+        this.error = true
+        this.loading = false
+      })
     },
   },
 }
@@ -266,6 +298,11 @@ export default {
   cursor: default;
 }
 
+.error-msg {
+  font-size: 13px;
+  color: #D85A30;
+  margin-top: 8px;
+}
 /* Responsive mobile */
 @media (max-width: 640px) {
   .contact-layout { grid-template-columns: 1fr; }
