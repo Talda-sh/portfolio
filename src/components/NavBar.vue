@@ -29,7 +29,7 @@ export default {
 }
 
 .navbar-inner {
-  max-width: 820px;
+  max-width: var(--content-width);
   margin: 0 auto;
   height: 60px;
   display: flex;
@@ -59,5 +59,25 @@ export default {
 .nav-links a:hover,
 .nav-links a.router-link-active {
   color: #7F77DD;
+}
+
+@media (max-width: 640px) {
+  .navbar {
+    padding: 0 var(--content-gutter);
+  }
+
+  .navbar-inner {
+    height: auto;
+    min-height: 60px;
+    padding: 0.85rem 0;
+    align-items: flex-start;
+    gap: 0.9rem;
+    flex-direction: column;
+  }
+
+  .nav-links {
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
 }
 </style>

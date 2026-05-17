@@ -31,10 +31,19 @@ export default {
   padding: 0;
 }
 
+:root {
+  --content-width: 1120px;
+  --content-gutter: 2rem;
+}
+
 body {
   font-family: 'DM Sans', sans-serif;
   background: #fafaf8;
   color: #2C2C2A;
+}
+
+#app {
+  min-height: 100vh;
 }
 
 /* ===== ANIMATION DE TRANSITION ENTRE PAGES ===== */
@@ -55,5 +64,11 @@ body {
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s ease, transform 0.5s ease; /* était 0.3s */
+}
+
+@media (max-width: 640px) {
+  :root {
+    --content-gutter: 1.25rem;
+  }
 }
 </style>

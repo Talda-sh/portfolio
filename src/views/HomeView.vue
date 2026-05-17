@@ -127,17 +127,17 @@ export default {
 
 /* Conteneur centré avec largeur max */
 .wrap {
-  max-width: 820px;
+  max-width: var(--content-width);
   margin: 0 auto;
-  padding: 3rem 1.5rem;
+  padding: 4rem var(--content-gutter);
 }
 
 /* Layout hero : texte à gauche, avatar à droite */
 .hero {
   display: grid;
-  grid-template-columns: 1fr auto; /* 1fr = prend tout l'espace dispo, auto = taille de l'avatar */
+  grid-template-columns: minmax(0, 1.2fr) minmax(260px, 360px);
   align-items: center;
-  gap: 2.5rem;
+  gap: 4rem;
 }
 
 /* Petite accroche verte au dessus du nom */
@@ -174,9 +174,9 @@ export default {
 
 /* Description */
 .hero-desc {
-  font-size: 14px;
+  font-size: 15px;
   color: #5F5E5A;
-  max-width: 420px;
+  max-width: 58ch;
   line-height: 1.75;
   margin-bottom: 1.4rem;
 }
@@ -238,12 +238,13 @@ export default {
 
 /* Conteneur de la photo */
 .hero-avatar {
-  width: 220px;  /* était 160px, on agrandit */
-  height: 220px; /* était 160px, on agrandit */
+  width: clamp(240px, 28vw, 320px);
+  height: clamp(240px, 28vw, 320px);
   border-radius: 28px;
   overflow: hidden;
   flex-shrink: 0;
   border: 3px solid #EEEDFE;
+  justify-self: end;
 }
 
 /* L'image remplit tout le conteneur */
@@ -331,17 +332,6 @@ export default {
   line-height: 1.75;
 }
 
-/* Responsive mobile */
-@media (max-width: 640px) {
-  .interest-row,
-  .interest-row.reverse {
-    grid-template-columns: 1fr;
-  }
-  .interest-row.reverse .interest-img,
-  .interest-row.reverse .interest-content {
-    order: unset;
-  }
-}
 /* ===== À PROPOS ===== */
 .about {
   margin-top: 4rem;
@@ -422,10 +412,65 @@ export default {
   font-weight: 500;
 }
 
-/* Responsive */
+@media (max-width: 900px) {
+  .wrap {
+    padding-top: 2.75rem;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .hero-avatar {
+    justify-self: start;
+    width: 220px;
+    height: 220px;
+  }
+
+  .interest-row,
+  .interest-row.reverse {
+    grid-template-columns: 1fr;
+    gap: 1.6rem;
+  }
+
+  .interest-row.reverse .interest-img,
+  .interest-row.reverse .interest-content {
+    order: unset;
+  }
+}
+
 @media (max-width: 640px) {
+  .wrap {
+    padding: 2.5rem var(--content-gutter);
+  }
+
+  .hero-name {
+    font-size: 2.9rem;
+  }
+
+  .hero-btns {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .btn-main,
+  .btn-sec {
+    width: 100%;
+    text-align: center;
+  }
+
+  .hero-avatar {
+    justify-self: center;
+  }
+
+  .interest-row {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+  }
+
   .about-cards {
     grid-template-columns: 1fr;
   }
-}  
+}
 </style>

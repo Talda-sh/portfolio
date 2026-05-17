@@ -19,6 +19,15 @@
             {{ tech }}
           </span>
         </div>
+        <a
+          v-if="project.liveUrl"
+          :href="project.liveUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="project-link"
+        >
+          Voir le site
+        </a>
       </div>
 
       <!-- Description complète -->
@@ -91,6 +100,30 @@ export default {
       // Tu ajouteras tes vraies screenshots dans src/assets/screenshots/
       lightboxImage: null,
       allProjects: [
+
+      {
+  id: 5,
+  title: 'PathSense',
+  description: 'Application web de navigation intérieure pour personnes malvoyantes. Interface 100% accessible avec instructions vocales, cartes interactives et calcul d\'itinéraires optimaux.',
+  techs: ['Angular', 'TypeScript', 'FastAPI', 'PostgreSQL', 'Jest', 'Cypress'],
+  liveUrl: 'https://groupe-gamma-og4f.vercel.app/',
+  details: [
+    'Développement d\'une interface 100% accessible pour personnes malvoyantes',
+    'Implémentation d\'une interface vocale avec instructions détaillées',
+    'Intégration de cartes interactives avec géolocalisation',
+    'Calcul d\'itinéraires optimaux pour navigation intérieure',
+    'Tests automatisés avec Jest et Cypress',
+  ],
+  screenshots: [
+    { src: require('@/assets/screenshots/pathsens/p1.png'), caption: ' L’écran d’accueil propose un bouton micro pour que l’utilisateur dise directement où il veut aller.' },
+    { src: require('@/assets/screenshots/pathsens/p2.png'), caption: 'Cet écran montre un visuel animé indiquant que l’application écoute la voix de l’utilisateur pour comprendre la commande.' },
+    { src: require('@/assets/screenshots/pathsens/p3.png'), caption: 'La carte s’affiche avec le trajet prévu vers la destination, indiquant clairement le chemin à suivre.' },
+    { src: require('@/assets/screenshots/pathsens/p4.png'), caption: '’écran liste clairement chaque instruction du trajet (distance et action) pour guider l’utilisateur pas à pas.' },
+  ],
+  
+},
+
+
         {
   id: 1,
   title: 'Serveur Web Debian / Nginx',
@@ -112,6 +145,10 @@ export default {
     { src: require('@/assets/screenshots/nginx/nginx5.png'), caption: 'Vérification des archives créées dans /archive — logs compressés au format .tar.gz' },
   ],
 },
+  
+  
+
+
        {
   id: 2,
   title: 'Infrastructure Active Directory',
@@ -184,9 +221,9 @@ export default {
 
 <style scoped>
 .wrap {
-  max-width: 820px;
+  max-width: var(--content-width);
   margin: 0 auto;
-  padding: 3rem 1.5rem;
+  padding: 3rem var(--content-gutter);
 }
 
 /* Bouton retour */
@@ -205,8 +242,23 @@ export default {
   margin-bottom: 2.5rem;
 }
 
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 1rem;
+  font-size: 14px;
+  font-weight: 600;
+  color: #7F77DD;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.project-link:hover {
+  opacity: 0.75;
+}
+
 .detail-title {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-weight: 800;
   font-size: 2rem;
   color: #2C2C2A;
@@ -233,7 +285,7 @@ export default {
 }
 
 .section-title {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-weight: 700;
   font-size: 1.1rem;
   color: #2C2C2A;

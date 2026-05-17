@@ -15,6 +15,15 @@
         class="proj-card"
         :class="'accent-' + project.color"
       >
+      
+       <!-- Image de prévisualisation -->
+     <img
+    v-if="project.thumbnail"
+    :src="project.thumbnail"
+    :alt="project.title"
+    class="proj-thumbnail"
+  />
+
         <!-- Titre du projet -->
         <h3 class="proj-title">{{ project.title }}</h3>
 
@@ -34,6 +43,15 @@
 
         <!-- Bouton INSIDE la carte, donc inside le v-for -->
         <div class="proj-footer">
+          <a
+            v-if="project.liveUrl"
+            :href="project.liveUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-live"
+          >
+            Voir le site
+          </a>
           <router-link
             :to="'/projets/' + project.id"
             class="btn-detail"
@@ -56,9 +74,19 @@ export default {
   return {
     projects: [
       {
+        id: 5,
+        title: 'PathSense',
+        description: 'Application web de navigation intérieure pour personnes malvoyantes avec interface vocale, géolocalisation et calcul d\'itinéraires optimaux.',
+        thumbnail: require('@/assets/screenshots/pathsens/p1.png'),
+        liveUrl: 'https://groupe-gamma-og4f.vercel.app/',
+        techs: ['Angular', 'TypeScript', 'FastAPI', 'PostgreSQL'],
+        color: 'purple',
+ },
+      {
         id: 1,
         title: 'Serveur Web Debian / Nginx',
         description: 'Installation et configuration d\'un serveur Nginx sur Debian. Optimisation des performances, tests de charge et sécurisation (pare-feu, permissions, HTTPS).',
+        thumbnail: require('@/assets/screenshots/nginx/nginx1.png'),
         techs: ['Linux', 'Debian', 'Nginx', 'HTTPS'],
         color: 'coral',
       },
@@ -66,6 +94,7 @@ export default {
         id: 2,
         title: 'Infrastructure Active Directory',
         description: 'Création d\'un domaine Active Directory sous Windows Server, gestion des stratégies de groupe (GPO), profils itinérants et délégation d\'administration.',
+        thumbnail: require('@/assets/screenshots/active-directory/ad1.png'),
         techs: ['Windows Server', 'Active Directory', 'GPO'],
         color: 'purple',
       },
@@ -73,6 +102,7 @@ export default {
         id: 3,
         title: 'Site Web Dynamique',
         description: 'Site responsive multi-pages avec formulaire connecté à une base de données, page d\'administration sécurisée et mode Jour/Nuit.',
+        thumbnail: require('@/assets/screenshots/site-web/site1.png'),
         techs: ['HTML', 'CSS', 'PHP', 'JavaScript', 'MySQL'],
         color: 'teal',
       },
@@ -91,9 +121,9 @@ export default {
 
 <style scoped>
 .wrap {
-  max-width: 820px;
+  max-width: var(--content-width);
   margin: 0 auto;
-  padding: 3rem 1.5rem;
+  padding: 3rem var(--content-gutter);
 }
 
 /* En-tête de la page */
@@ -112,6 +142,15 @@ export default {
 .page-sub {
   font-size: 14px;
   color: #5F5E5A;
+}
+
+/* Image de prévisualisation */
+.proj-thumbnail {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 10px 10px 0 0;
+  margin-bottom: 1rem;
 }
 
 /* Grille responsive : 2 colonnes sur grand écran */
@@ -185,11 +224,16 @@ export default {
 
 /* Séparateur entre description et bouton */
 .proj-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   margin-top: 14px;
   padding-top: 12px;
   border-top: 0.5px solid #D3D1C7;
 }
 
+.btn-live,
 /* Lien vers la page détail */
 .btn-detail {
   font-size: 13px;
@@ -199,5 +243,6 @@ export default {
   transition: opacity 0.2s;
 }
 
+.btn-live:hover,
 .btn-detail:hover { opacity: 0.7; }
 </style>

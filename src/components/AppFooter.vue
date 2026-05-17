@@ -42,7 +42,7 @@ export default {
 }
 
 .footer-inner {
-  max-width: 820px;
+  max-width: var(--content-width);
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -77,5 +77,16 @@ export default {
 
 .footer-links a:hover {
   color: #7F77DD;
+}
+
+@media (max-width: 640px) {
+  .footer {
+    padding: 1.5rem var(--content-gutter);
+  }
+
+  .footer-inner {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 }
 </style>

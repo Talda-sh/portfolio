@@ -157,9 +157,9 @@ export default {
 
 <style scoped>
 .wrap {
-  max-width: 820px;
+  max-width: var(--content-width);
   margin: 0 auto;
-  padding: 3rem 1.5rem;
+  padding: 3rem var(--content-gutter);
 }
 
 .page-head {
