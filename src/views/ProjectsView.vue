@@ -1,13 +1,10 @@
 <template>
   <div class="wrap">
-
-    <!-- ===== TITRE DE LA PAGE ===== -->
     <div class="page-head">
       <h1 class="page-title">Mes projets</h1>
       <p class="page-sub">Quelques projets réalisés pendant ma formation</p>
     </div>
 
-    <!-- ===== GRILLE DE PROJETS ===== -->
     <div class="proj-grid" v-if="projects.length">
       <div
         v-for="project in projects"
@@ -15,22 +12,16 @@
         class="proj-card"
         :class="'accent-' + project.color"
       >
-      
-       <!-- Image de prévisualisation -->
-     <img
-    v-if="project.thumbnail"
-    :src="project.thumbnail"
-    :alt="project.title"
-    class="proj-thumbnail"
-  />
+        <img
+          v-if="project.thumbnail"
+          :src="project.thumbnail"
+          :alt="project.title"
+          class="proj-thumbnail"
+        />
 
-        <!-- Titre du projet -->
         <h3 class="proj-title">{{ project.title }}</h3>
-
-        <!-- Description -->
         <p class="proj-desc">{{ project.description }}</p>
 
-        <!-- Tags des technologies utilisées -->
         <div class="proj-techs">
           <span
             v-for="tech in project.techs"
@@ -41,7 +32,6 @@
           </span>
         </div>
 
-        <!-- Bouton INSIDE la carte, donc inside le v-for -->
         <div class="proj-footer">
           <a
             v-if="project.liveUrl"
@@ -56,66 +46,28 @@
             :to="'/projets/' + project.id"
             class="btn-detail"
           >
-            Voir le détail →
+            Voir le détail ->
           </router-link>
         </div>
-
       </div>
     </div>
-
   </div>
 </template>
 
 <script>
+import { projects } from '@/data/projects'
+
 export default {
   name: 'ProjectsView',
 
   data() {
-  return {
-    projects: [
-      {
-        id: 5,
-        title: 'PathSense',
-        description: 'Application web de navigation intérieure pour personnes malvoyantes avec interface vocale, géolocalisation et calcul d\'itinéraires optimaux.',
-        thumbnail: require('@/assets/screenshots/pathsens/p1.png'),
-        liveUrl: 'https://groupe-gamma-og4f.vercel.app/',
-        techs: ['Angular', 'TypeScript', 'FastAPI', 'PostgreSQL'],
-        color: 'purple',
- },
-      {
-        id: 1,
-        title: 'Serveur Web Debian / Nginx',
-        description: 'Installation et configuration d\'un serveur Nginx sur Debian. Optimisation des performances, tests de charge et sécurisation (pare-feu, permissions, HTTPS).',
-        thumbnail: require('@/assets/screenshots/nginx/nginx1.png'),
-        techs: ['Linux', 'Debian', 'Nginx', 'HTTPS'],
-        color: 'coral',
-      },
-      {
-        id: 2,
-        title: 'Infrastructure Active Directory',
-        description: 'Création d\'un domaine Active Directory sous Windows Server, gestion des stratégies de groupe (GPO), profils itinérants et délégation d\'administration.',
-        thumbnail: require('@/assets/screenshots/active-directory/ad1.png'),
-        techs: ['Windows Server', 'Active Directory', 'GPO'],
-        color: 'purple',
-      },
-      {
-        id: 3,
-        title: 'Site Web Dynamique',
-        description: 'Site responsive multi-pages avec formulaire connecté à une base de données, page d\'administration sécurisée et mode Jour/Nuit.',
-        thumbnail: require('@/assets/screenshots/site-web/site1.png'),
-        techs: ['HTML', 'CSS', 'PHP', 'JavaScript', 'MySQL'],
-        color: 'teal',
-      },
-      {
-        id: 4,
-        title: 'Jeu du Pendu — Python',
-        description: 'Jeu du pendu en ligne de commande avec gestion des vies, sélection aléatoire de mots depuis un fichier texte et construction progressive du pendu.',
-        techs: ['Python'],
-        color: 'pink',
-      },
-    ],
-  }
-}, 
+    return {
+      projects: projects.map((project) => ({
+        ...project,
+        description: project.summary,
+      })),
+    }
+  },
 }
 </script>
 
@@ -126,7 +78,6 @@ export default {
   padding: 3rem var(--content-gutter);
 }
 
-/* En-tête de la page */
 .page-head {
   margin-bottom: 2.5rem;
 }
@@ -135,16 +86,15 @@ export default {
   font-family: 'Montserrat', sans-serif;
   font-weight: 800;
   font-size: 2rem;
-  color: #2C2C2A;
+  color: #2c2c2a;
   margin-bottom: 0.4rem;
 }
 
 .page-sub {
   font-size: 14px;
-  color: #5F5E5A;
+  color: #5f5e5a;
 }
 
-/* Image de prévisualisation */
 .proj-thumbnail {
   width: 100%;
   height: 160px;
@@ -153,17 +103,15 @@ export default {
   margin-bottom: 1rem;
 }
 
-/* Grille responsive : 2 colonnes sur grand écran */
 .proj-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 16px;
 }
 
-/* Carte projet */
 .proj-card {
   background: #fff;
-  border: 0.5px solid #D3D1C7;
+  border: 0.5px solid #d3d1c7;
   border-radius: 14px;
   padding: 1.4rem;
   position: relative;
@@ -171,58 +119,54 @@ export default {
   transition: transform 0.2s ease;
 }
 
-/* Légère élévation au survol */
 .proj-card:hover {
   transform: translateY(-4px);
 }
 
-/* Bande colorée en haut de chaque carte selon la couleur du projet */
 .proj-card::before {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0;
+  top: 0;
+  left: 0;
+  right: 0;
   height: 4px;
   border-radius: 14px 14px 0 0;
 }
 
-/* Couleurs des bandes */
-.accent-purple::before { background: #7F77DD; }
-.accent-teal::before   { background: #1D9E75; }
-.accent-coral::before  { background: #D85A30; }
-.accent-pink::before   { background: #D4537E; }
+.accent-purple::before { background: #7f77dd; }
+.accent-teal::before { background: #1d9e75; }
+.accent-coral::before { background: #d85a30; }
+.accent-pink::before { background: #d4537e; }
 
 .proj-title {
   font-family: 'Syne', sans-serif;
   font-weight: 700;
   font-size: 1rem;
-  color: #2C2C2A;
+  color: #2c2c2a;
   margin-bottom: 8px;
 }
 
 .proj-desc {
   font-size: 13px;
-  color: #5F5E5A;
+  color: #5f5e5a;
   line-height: 1.6;
   margin-bottom: 14px;
 }
 
-/* Conteneur des technos */
 .proj-techs {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
 }
 
-/* Pill de techno */
 .tech-pill {
   font-size: 11px;
   padding: 3px 10px;
   border-radius: 20px;
-  border: 0.5px solid #D3D1C7;
-  color: #5F5E5A;
+  border: 0.5px solid #d3d1c7;
+  color: #5f5e5a;
 }
 
-/* Séparateur entre description et bouton */
 .proj-footer {
   display: flex;
   align-items: center;
@@ -230,19 +174,20 @@ export default {
   gap: 12px;
   margin-top: 14px;
   padding-top: 12px;
-  border-top: 0.5px solid #D3D1C7;
+  border-top: 0.5px solid #d3d1c7;
 }
 
 .btn-live,
-/* Lien vers la page détail */
 .btn-detail {
   font-size: 13px;
-  color: #7F77DD;
+  color: #7f77dd;
   font-weight: 500;
   text-decoration: none;
   transition: opacity 0.2s;
 }
 
 .btn-live:hover,
-.btn-detail:hover { opacity: 0.7; }
+.btn-detail:hover {
+  opacity: 0.7;
+}
 </style>

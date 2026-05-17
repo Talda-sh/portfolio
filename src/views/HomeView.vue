@@ -1,23 +1,20 @@
 <template>
   <div class="wrap">
-
-    <!-- ===== SECTION HERO ===== -->
     <section class="hero">
       <div class="hero-text">
         <p class="hero-greeting">Bonjour, je suis</p>
-        <h1 class="hero-name">Talda<span class="dot-accent">.</span></h1>
-        <p class="hero-role">Développeur Web</p>
-        <p class="hero-desc">
-         Je suis Talda NZOUSSI, étudiante en Bachelor Informatique à Orléans,
-  passionnée par le développement web, l'administration système et les
-  réseaux informatiques. Rigoureuse, curieuse et organisée, j'aime relever
-  des défis techniques et apprendre de nouvelles technologies.
-        </p>
+        <h1 class="hero-name">{{ profile.firstName }}<span class="dot-accent">.</span></h1>
+        <p class="hero-role">{{ profile.role }}</p>
+        <p class="hero-desc">{{ profile.intro }}</p>
         <div class="hero-tags">
-          <span class="tag t-purple">Python / FastAPI</span>
-          <span class="tag t-teal">PHP / MySQL</span>
-          <span class="tag t-coral">Linux / Nginx</span>
-          <span class="tag t-pink">Vue.js</span>
+          <span
+            v-for="(tag, index) in profile.heroTags"
+            :key="tag"
+            class="tag"
+            :class="heroTagClasses[index % heroTagClasses.length]"
+          >
+            {{ tag }}
+          </span>
         </div>
         <div class="hero-btns">
           <router-link to="/projets" class="btn-main">Voir mes projets</router-link>
@@ -29,110 +26,76 @@
       </div>
     </section>
 
-    <!-- ===== CENTRES D'INTÉRÊT ===== -->
     <section class="interests">
       <h2 class="interests-title">Centres d'intérêt</h2>
 
-      <div class="interest-row">
-        <img src="@/assets/interests/gym.png" alt="Gymnastique" class="interest-img" />
+      <div
+        v-for="interest in profile.interests"
+        :key="interest.name"
+        class="interest-row"
+        :class="{ reverse: interest.reverse }"
+      >
+        <img :src="interest.image" :alt="interest.imageAlt" class="interest-img" />
         <div class="interest-content">
-          <span class="interest-tag t-teal">Gymnastique</span>
-          <h3 class="interest-name">Ancienne athlète de haut niveau</h3>
-          <p class="interest-desc">
-            Ancienne membre de l'équipe nationale du Congo, j'ai remporté plusieurs médailles d'or en championnat. La gymnastique m'a appris la discipline, la persévérance et le dépassement de soi — des valeurs que j'applique aussi dans mes projets informatiques.
-          </p>
+          <span class="interest-tag" :class="`t-${interest.color}`">{{ interest.name }}</span>
+          <h3 class="interest-name">{{ interest.title }}</h3>
+          <p class="interest-desc">{{ interest.description }}</p>
         </div>
       </div>
-
-      <div class="interest-row reverse">
-        <img src="@/assets/interests/video.png" alt="Montage vidéo" class="interest-img" />
-        <div class="interest-content">
-          <span class="interest-tag t-purple">Montage vidéo</span>
-          <h3 class="interest-name">Raconter des histoires en images</h3>
-          <p class="interest-desc">
-            Passionnée par la création vidéo, j'aime assembler des images, des sons et des effets pour raconter une histoire. Ce sens du détail et de l'esthétique se retrouve aussi dans ma façon de concevoir des interfaces web.
-          </p>
-        </div>
-      </div>
-
-      <div class="interest-row">
-        <img src="@/assets/interests/photo.jpeg" alt="Photographie" class="interest-img" />
-        <div class="interest-content">
-          <span class="interest-tag t-coral">Photographie</span>
-          <h3 class="interest-name">Capturer l'instant</h3>
-          <p class="interest-desc">
-            J'aime capturer des moments uniques et jouer avec la lumière et les perspectives. La photographie m'a appris à observer le monde différemment et à chercher la meilleure façon de présenter les choses.
-          </p>
-        </div>
-      </div>
-
     </section>
-<section class="about">
 
-  <h2 class="about-title">À propos de moi</h2>
+    <section class="about">
+      <h2 class="about-title">À propos de moi</h2>
 
-  <!-- Grille de 2 cartes -->
-  <div class="about-cards">
-
-    <!-- Carte 1 : Passion tech -->
-    <div class="about-card">
-      <img src="@/assets/tech.jpg" alt="Passion technologie" class="about-card-img" />
-      <div class="about-card-body">
-        <p class="about-desc">
-          Passionnée par les nouvelles technologies, je consacre mon temps libre
-          à explorer de nouveaux outils et frameworks pour enrichir mes compétences.
-          Chaque projet est pour moi une opportunité d'apprendre et de progresser.
-        </p>
+      <div class="about-cards">
+        <div
+          v-for="card in profile.aboutCards"
+          :key="card.imageAlt"
+          class="about-card"
+        >
+          <img :src="card.image" :alt="card.imageAlt" class="about-card-img" />
+          <div class="about-card-body">
+            <p class="about-desc">{{ card.description }}</p>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <!-- Carte 2 : Job étudiant -->
-    <div class="about-card">
-      <img src="@/assets/drive.jpg" alt="Auchan Drive" class="about-card-img" />
-      <div class="about-card-body">
-        <p class="about-desc">
-          En parallèle de mes études, je travaille comme préparatrice de commandes
-          chez Auchan Drive, une expérience qui renforce mon sens de l'organisation,
-          ma rigueur et mon esprit d'équipe au quotidien.
-        </p>
+      <div class="about-langs">
+        <div
+          v-for="language in profile.languages"
+          :key="language.name"
+          class="lang-item"
+        >
+          <span class="lang-name">{{ language.name }}</span>
+          <span class="lang-level" :class="`t-${language.color}`">{{ language.level }}</span>
+        </div>
       </div>
-    </div>
-
-  </div>
-
-  <!-- Langues -->
-  <div class="about-langs">
-    <div class="lang-item">
-      <span class="lang-name">Français</span>
-      <span class="lang-level t-teal">Natif</span>
-    </div>
-    <div class="lang-item">
-      <span class="lang-name">Anglais</span>
-      <span class="lang-level t-purple">Courant</span>
-    </div>
-  </div>
-
-</section>
+    </section>
   </div>
 </template>
 
 <script>
+import { profile } from '@/data/profile'
+
 export default {
   name: 'HomeView',
+
+  data() {
+    return {
+      profile,
+      heroTagClasses: ['t-purple', 't-teal', 't-coral', 't-pink'],
+    }
+  },
 }
 </script>
 
 <style scoped>
-/* scoped = ce CSS s'applique UNIQUEMENT à ce composant */
-
-/* Conteneur centré avec largeur max */
 .wrap {
   max-width: var(--content-width);
   margin: 0 auto;
   padding: 4rem var(--content-gutter);
 }
 
-/* Layout hero : texte à gauche, avatar à droite */
 .hero {
   display: grid;
   grid-template-columns: minmax(0, 1.2fr) minmax(260px, 360px);
@@ -140,56 +103,49 @@ export default {
   gap: 4rem;
 }
 
-/* Petite accroche verte au dessus du nom */
 .hero-greeting {
   font-size: 14px;
-  color: #7F77DD;
+  color: #7f77dd;
   font-weight: 500;
   margin-bottom: 0.4rem;
 }
 
-/* Nom en grand avec police Syne */
 .hero-name {
   font-family: 'Montserrat', sans-serif;
   font-weight: 900;
   font-size: 3.5rem;
   line-height: 1;
-  color: #2C2C2A;
+  color: #2c2c2a;
   margin-bottom: 0.4rem;
 }
 
-/* Le point rose après le nom */
 .dot-accent {
-  color: #D4537E;
+  color: #d4537e;
 }
 
-/* Sous-titre métier */
 .hero-role {
   font-family: 'Syne', sans-serif;
   font-weight: 700;
   font-size: 1.2rem;
-  color: #5F5E5A;
+  color: #5f5e5a;
   margin-bottom: 1rem;
 }
 
-/* Description */
 .hero-desc {
   font-size: 15px;
-  color: #5F5E5A;
+  color: #5f5e5a;
   max-width: 58ch;
   line-height: 1.75;
   margin-bottom: 1.4rem;
 }
 
-/* Conteneur des tags */
 .hero-tags {
   display: flex;
-  flex-wrap: wrap; /* passe à la ligne si pas assez de place */
+  flex-wrap: wrap;
   gap: 8px;
   margin-bottom: 1.8rem;
 }
 
-/* Style de base pour tous les tags */
 .tag {
   padding: 5px 14px;
   border-radius: 20px;
@@ -197,19 +153,16 @@ export default {
   font-weight: 500;
 }
 
-/* Couleurs des tags */
-.t-purple { background: #EEEDFE; color: #534AB7; }
-.t-teal   { background: #E1F5EE; color: #0F6E56; }
-.t-coral  { background: #FAECE7; color: #993C1D; }
-.t-pink   { background: #FBEAF0; color: #993556; }
+.t-purple { background: #eeedfe; color: #534ab7; }
+.t-teal { background: #e1f5ee; color: #0f6e56; }
+.t-coral { background: #faece7; color: #993c1d; }
+.t-pink { background: #fbeaf0; color: #993556; }
 
-/* Conteneur des boutons */
 .hero-btns {
   display: flex;
   gap: 12px;
 }
 
-/* Style partagé des deux boutons */
 .btn-main,
 .btn-sec {
   display: inline-block;
@@ -221,56 +174,56 @@ export default {
   transition: opacity 0.2s;
 }
 
-/* Bouton principal : fond violet */
 .btn-main {
-  background: #7F77DD;
+  background: #7f77dd;
   color: #fff;
 }
-.btn-main:hover { opacity: 0.85; }
 
-/* Bouton secondaire : contour violet */
+.btn-main:hover {
+  opacity: 0.85;
+}
+
 .btn-sec {
   background: transparent;
-  color: #7F77DD;
-  border: 1.5px solid #7F77DD;
+  color: #7f77dd;
+  border: 1.5px solid #7f77dd;
 }
-.btn-sec:hover { background: #EEEDFE; }
 
-/* Conteneur de la photo */
+.btn-sec:hover {
+  background: #eeedfe;
+}
+
 .hero-avatar {
   width: clamp(240px, 28vw, 320px);
   height: clamp(240px, 28vw, 320px);
   border-radius: 28px;
   overflow: hidden;
   flex-shrink: 0;
-  border: 3px solid #EEEDFE;
+  border: 3px solid #eeedfe;
   justify-self: end;
 }
 
-/* L'image remplit tout le conteneur */
 .avatar-img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* recadre l'image sans la déformer */
-  object-position: center top; /* centre sur le haut (le visage) */
+  object-fit: cover;
+  object-position: center top;
 }
 
-/* ===== CENTRES D'INTÉRÊT ===== */
 .interests {
   margin-top: 4rem;
   padding-top: 3rem;
-  border-top: 0.5px solid #D3D1C7;
+  border-top: 0.5px solid #d3d1c7;
 }
 
 .interests-title {
   font-family: 'Syne', sans-serif;
   font-weight: 700;
   font-size: 1.4rem;
-  color: #2C2C2A;
+  color: #2c2c2a;
   margin-bottom: 2rem;
 }
 
-/* Ligne photo + texte */
 .interest-row {
   display: grid;
   grid-template-columns: 280px 1fr;
@@ -278,10 +231,9 @@ export default {
   align-items: center;
   margin-bottom: 3rem;
   padding-bottom: 3rem;
-  border-bottom: 0.5px solid #D3D1C7;
+  border-bottom: 0.5px solid #d3d1c7;
 }
 
-/* Ligne inversée — texte à gauche, photo à droite */
 .interest-row.reverse {
   grid-template-columns: 1fr 280px;
 }
@@ -299,7 +251,6 @@ export default {
   margin-bottom: 0;
 }
 
-/* Photo */
 .interest-img {
   width: 100%;
   height: 220px;
@@ -307,8 +258,6 @@ export default {
   border-radius: 16px;
 }
 
-
-/* Tag coloré */
 .interest-tag {
   display: inline-block;
   padding: 4px 14px;
@@ -322,32 +271,30 @@ export default {
   font-family: 'Syne', sans-serif;
   font-weight: 700;
   font-size: 1.1rem;
-  color: #2C2C2A;
+  color: #2c2c2a;
   margin-bottom: 0.8rem;
 }
 
 .interest-desc {
   font-size: 14px;
-  color: #5F5E5A;
+  color: #5f5e5a;
   line-height: 1.75;
 }
 
-/* ===== À PROPOS ===== */
 .about {
   margin-top: 4rem;
   padding-top: 3rem;
-  border-top: 0.5px solid #D3D1C7;
+  border-top: 0.5px solid #d3d1c7;
 }
 
 .about-title {
   font-family: 'Syne', sans-serif;
   font-weight: 700;
   font-size: 1.4rem;
-  color: #2C2C2A;
+  color: #2c2c2a;
   margin-bottom: 1.8rem;
 }
 
-/* Grille 2 cartes */
 .about-cards {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -355,10 +302,9 @@ export default {
   margin-bottom: 2rem;
 }
 
-/* Carte */
 .about-card {
   background: #fff;
-  border: 0.5px solid #D3D1C7;
+  border: 0.5px solid #d3d1c7;
   border-radius: 14px;
   overflow: hidden;
   transition: transform 0.2s ease;
@@ -368,25 +314,22 @@ export default {
   transform: translateY(-4px);
 }
 
-/* Image de la carte */
 .about-card-img {
   width: 100%;
   height: 180px;
   object-fit: cover;
 }
 
-/* Texte de la carte */
 .about-card-body {
   padding: 1.2rem;
 }
 
 .about-desc {
   font-size: 13px;
-  color: #5F5E5A;
+  color: #5f5e5a;
   line-height: 1.75;
 }
 
-/* Langues */
 .about-langs {
   display: flex;
   gap: 1rem;
@@ -402,7 +345,7 @@ export default {
 .lang-name {
   font-size: 14px;
   font-weight: 500;
-  color: #2C2C2A;
+  color: #2c2c2a;
 }
 
 .lang-level {
